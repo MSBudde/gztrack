@@ -1,0 +1,73 @@
+<% if current_user.email === "nastya@gztracker.com" || "gzcom@gztracker.com" %>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+ <style>
+    ul,li {
+      display: inline;
+      padding-right: 3px;
+    }
+    
+    #gz {
+       display:inline-block;
+      width: 33%;
+      vertical-align: middle;
+      text-align: center;
+  }
+    }
+  </style>
+  
+  <body>
+  <div id="gz"><img src="http://i.imgur.com/KtRxlHJ.png"></img></div>
+  <div id="gz"><img src="http://i.imgur.com/k2iFw6B.png"></img></div>
+
+    <h1 style="text-align:center;">Your Siwy Discount Tracker</h1>
+    <p style="text-align:center;">Checks the 1000 Most recent orders</p>
+    <p style="text-align:center;">Check the next 250 by clicking the appropriate page</p>
+    <ul style="display:inline;text-align:center;margin-left:45%;">
+              <li> <%= link_to "1", {:controller => "nastya", :action => "shop"} %></li>
+              <li> <%= link_to "2", {:controller => "nastya", :action => "newpage"} %></li>
+              <li> <%= link_to "3", {:controller => "nastya", :action => "thirdpage"} %></li>
+            <li> <%= link_to "4", {:controller => "nastya", :action => "lastpage"} %></li>
+</ul>
+<br>
+ 
+  <table>
+      <thead>
+        <tr>
+        <th>Order #</th>
+        <th>Financial Status</th>
+        <th> Created_at</th>
+        <th> Item Name</th>
+        <th> Coupon Code</th>
+        </tr>
+      </thead>
+      
+      <% @orders.each do |order| %>
+      <% if order["discount_codes"].length > 0 && @nastya.include?(order["discount_codes"][0]["code"].downcase) %> 
+  <tbody>
+    <tr>
+      <td><%= order["name"] %></td>
+      <td><%= order["financial_status"] %></td>
+      <td><%= order["created_at"] %></td>
+     <td><%= order["line_items"][0]["title"] %></td>
+      <td><%= order["discount_codes"][0]["code"] %></td>
+    </tr>
+
+  <% end %>
+<% end %>
+ </tbody>
+  </table>
+</div>
+  </body>
+</html>
+<% else %>
+<h1>you dont have access to this page sorry.</h1>
+<%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+
+
+<% end %>

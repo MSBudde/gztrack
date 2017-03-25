@@ -1,0 +1,2 @@
+module NastyaHelper
+end

@@ -1,0 +1,2 @@
+module FiomallHelper
+end
